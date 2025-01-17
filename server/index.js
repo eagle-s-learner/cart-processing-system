@@ -1,13 +1,26 @@
-import express from "express";
-import dotenv from "dotenv";
+const express = require("express");
+const dotenv = require("dotenv");
+const bodyParser = require("body-parser");
+const client = require("./config.js");
+const getItems = require("./routes/getItems.js");
+const cors = require("cors");
 
 dotenv.config();
 
 const app = express();
 
-app.get('/', (req, res) => {
-    res.send("hello");
-})
+app.use(bodyParser.json());
+app.use(cors({
+    credentials: true,
+    origin: "http://localhost:5173"
+}))
+
+// app.get('/', async (req, res) => {
+//     const result = await client.query(`SELECT * FROM items`);
+//     res.status(200).json(result.rows);
+// })
+
+app.use('/api', getItems)
 
 
 const port = process.env.PORT || 3201;

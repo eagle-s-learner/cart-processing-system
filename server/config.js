@@ -1,5 +1,5 @@
-import Pg from "pg";
-import dotenv from "dotenv";
+const Pg = require("pg");
+const dotenv = require("dotenv");
 dotenv.config();
 
 const db = new Pg.Client({
@@ -15,4 +15,4 @@ db.connect()
     .catch((err) => console.error("Connection error ", err.stack));
 
 
-export default db;
+module.exports = db;
