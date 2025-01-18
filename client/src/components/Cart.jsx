@@ -35,6 +35,7 @@ export default function Cart({ cartItems, setShowCart }) {
                     { quantity },
                     { withCredentials: true }
                 );
+                // setShowCart(false)
             }
         } catch (error) {
             console.log("Failed to update quantity", error);
@@ -72,7 +73,7 @@ export default function Cart({ cartItems, setShowCart }) {
                                         <button
                                             onClick={() =>
                                                 handleUpdateQuantity(
-                                                    item.id,
+                                                    item.item_id,
                                                     item.quantity - 1
                                                 )
                                             }
@@ -84,7 +85,7 @@ export default function Cart({ cartItems, setShowCart }) {
                                         <button
                                             onClick={() =>
                                                 handleUpdateQuantity(
-                                                    item.id,
+                                                    item.item_id,
                                                     item.quantity + 1
                                                 )
                                             }
