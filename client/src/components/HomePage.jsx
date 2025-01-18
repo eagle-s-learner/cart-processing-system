@@ -1,11 +1,14 @@
 import axios from "axios";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { useState } from "react";
 import ShowAllItems from "../pages/ShowAllItems";
+import { AuthContext } from "../UserContext";
 
 export default function HomePage() {
     const [items, setItems] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+
+    const userCtx = useContext(AuthContext);
 
     useEffect(() => {
         async function getItems() {
@@ -26,15 +29,45 @@ export default function HomePage() {
         getItems();
     }, []);
 
+    const handleLogout = async () => {
+        try {
+            await axios.post("http://localhost:3200/api/logout", {}, { withCredentials: true });
+            userCtx.setLogin(false);
+            userCtx.setUserInfo({});
+        } catch (error) {
+            console.log("Logout failed", error);
+        }
+    };
+
     return (
         <div>
-            {!isLoading && <h1 className="text-gray-500">Loading..</h1>}
+            {!isLoading && <h1 className="text-gray-500 w-fit mx-auto">Loading..</h1>}
             {isLoading && (
                 <div>
-                    <div className="bg-gray-300 p-2">
-                        <h1 className="w-fit mx-auto text-2xl font-semibold text-slate-700">
-                            Cart Processing System
-                        </h1>
+                    <div className="bg-gray-300 p-4">
+                    {userCtx.login ? (
+                            <div className="flex justify-around items-center">
+                                <h1 className="text-2xl font-semibold text-slate-700">
+                                    Cart Processing System
+                                </h1>
+                                <button
+                                    className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
+                                    onClick={() => alert("Go to Cart")}
+                                >
+                                    Cart
+                                </button>
+                                <button
+                                    className=" text-black px-4 py-2 underline"
+                                    onClick={handleLogout}
+                                >
+                                    Logout
+                                </button>
+                            </div>
+                        ) : (
+                            <h1 className="text-2xl font-semibold text-slate-700 text-center">
+                                Cart Processing System
+                            </h1>
+                        )}
                     </div>
                     <ShowAllItems items={items}/>
                 </div>
