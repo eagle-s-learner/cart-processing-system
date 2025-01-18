@@ -33,7 +33,6 @@ export default function LoginPage({ setShowLoginPage }) {
 
             if (response.status === 200) {
                 // console.log(response.data)
-                // setLoginSuccess(true);
                 userCtx.setLogin(true);
                 userCtx.setUserInfo(response.data);
                 setShowLoginPage(false);

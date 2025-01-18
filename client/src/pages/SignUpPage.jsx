@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useState } from "react";
 
 export default function SignupPage({ setShowSignup }) {
@@ -7,6 +8,33 @@ export default function SignupPage({ setShowSignup }) {
 
     async function handleSignUp(ev){
         ev.preventDefault()
+        ev.preventDefault();
+
+        const formData = new FormData();
+        formData.append("name", name);
+        formData.append("email", email);
+        formData.append("password", password);
+
+        let response = null;
+        try {
+            response = await axios.post(
+                "http://localhost:3200/api/signup/",
+                formData,
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    withCredentials: true,
+                }
+            );
+
+            if (response.status === 200) {
+                setShowSignup(false)
+            }
+        } catch (error) {
+            // console.log(error)
+            console.log(error);
+        }
     }
     return (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
