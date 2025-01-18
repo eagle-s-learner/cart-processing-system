@@ -10,6 +10,7 @@ const userLoginCheck = require("./routes/userLoginCheck.js")
 const cookieParser = require("cookie-parser");
 const logout = require("./routes/logout.js");
 const addItemToCart = require("./routes/addItem.js");
+const getUserCartItem = require("./routes/getUserCartItem.js")
 
 dotenv.config();
 
@@ -34,6 +35,7 @@ app.use('/api', signup);
 app.use('/api', userLoginCheck);
 app.use('/api', logout);
 app.use('/api', addItemToCart);
+app.use('/api', getUserCartItem);
 
 
 const port = process.env.PORT || 3201;
