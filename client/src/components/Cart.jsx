@@ -13,6 +13,7 @@ export default function Cart({ cartItems, setShowCart }) {
     };
 
     const handleRemoveItem = async (itemId) => {
+        console.log(itemId);
         try {
             await axios.delete(`http://localhost:3200/api/cart/${itemId}`, {
                 withCredentials: true,
@@ -93,7 +94,7 @@ export default function Cart({ cartItems, setShowCart }) {
                                         </button>
                                         <button
                                             onClick={() =>
-                                                handleRemoveItem(item.id)
+                                                handleRemoveItem(item.item_id)
                                             }
                                             className="text-red-500 ml-2"
                                         >
