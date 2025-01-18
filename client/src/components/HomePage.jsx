@@ -10,6 +10,8 @@ export default function HomePage() {
     const [isLoading, setIsLoading] = useState(false);
     const [showCart, setShowCart] = useState(false);
 
+    const [cartItems, setCartItems] = useState([]);
+
     const userCtx = useContext(AuthContext);
 
     useEffect(() => {
@@ -41,6 +43,25 @@ export default function HomePage() {
         }
     };
 
+    useEffect(() => {
+        if (showCart && userCtx.login) {
+            async function getCartItems() {
+                try {
+                    const response = await axios.get(
+                        "http://localhost:3200/api/cart", { withCredentials: true }
+                    );
+                    if (response.status === 200) {
+                        setCartItems(response.data);
+                    }
+                } catch (error) {
+                    console.log("Failed to fetch cart items", error);
+                }
+            }
+
+            getCartItems();
+        }
+    }, [showCart, userCtx.login]);
+
     return (
         <div>
             {!isLoading && <h1 className="text-gray-500 w-fit mx-auto">Loading..</h1>}
@@ -54,7 +75,7 @@ export default function HomePage() {
                                 </h1>
                                 <button
                                     className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
-                                    onClick={() => setShowCart()}
+                                    onClick={() => setShowCart(true)}
                                 >
                                     Cart
                                 </button>
@@ -74,7 +95,7 @@ export default function HomePage() {
                     <ShowAllItems items={items}/>
                 </div>
             )}
-            {showCart && <Cart setShowCart={setShowCart}/>}
+            {showCart && <Cart cartItems={cartItems} setShowCart={setShowCart}/>}
         </div>
     );
 }
