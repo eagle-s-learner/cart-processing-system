@@ -11,7 +11,7 @@ const jwtSecret = process.env.JWT_SECRET;
 
 async function checkAuth(req, res, next){
     const { token } = req.cookies;
-    console.log(req.body)
+    // console.log(req.body)
     // console.log(token)
     try {
         if (token) {

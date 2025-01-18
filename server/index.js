@@ -11,6 +11,7 @@ const cookieParser = require("cookie-parser");
 const logout = require("./routes/logout.js");
 const addItemToCart = require("./routes/addItem.js");
 const getUserCartItem = require("./routes/getUserCartItem.js")
+const deleteItemFromCart = require("./routes/deleteItemFromCart.js")
 
 dotenv.config();
 
@@ -36,6 +37,7 @@ app.use('/api', userLoginCheck);
 app.use('/api', logout);
 app.use('/api', addItemToCart);
 app.use('/api', getUserCartItem);
+app.use('/api', deleteItemFromCart);
 
 
 const port = process.env.PORT || 3201;
