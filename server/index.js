@@ -4,6 +4,8 @@ const bodyParser = require("body-parser");
 const client = require("./config.js");
 const getItems = require("./routes/getItems.js");
 const cors = require("cors");
+const login = require("./routes/login.js")
+const signup = require("./routes/signup.js")
 
 dotenv.config();
 
@@ -20,7 +22,9 @@ app.use(cors({
 //     res.status(200).json(result.rows);
 // })
 
-app.use('/api', getItems)
+app.use('/api', getItems);
+app.use('/api', login);
+app.use('/api', signup);
 
 
 const port = process.env.PORT || 3201;
