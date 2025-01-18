@@ -1,19 +1,34 @@
 import { useContext, useState } from "react";
 import { AuthContext } from "../UserContext";
 import LoginPage from "./LoginPage";
+import axios from "axios";
 
 export default function ShowAllItems({ items }) {
     const { login } = useContext(AuthContext);
     const [showLoginPage, setShowLoginPage] = useState(false);
+    const [popupMessage, setPopupMessage] = useState("");
+    const [showPopup, setShowPopup] = useState(false);
 
-    async function handleAddToCart({ item }) {
+    async function handleAddToCart(item) {
         try {
             if (login) {
-                console.log("add item");
+                const response = await axios.post('http://localhost:3200/api/additem/', item, {withCredentials: true});
+                if (response.status === 200) {
+                    setPopupMessage("Item added to cart");
+                    setShowPopup(true);
+                    setTimeout(() => {
+                        setShowPopup(false);
+                    }, 3000); // Hide after 3 seconds
+                }
             } else {
                 setShowLoginPage(true);
             }
         } catch (error) {
+            setPopupMessage("Something went wrong");
+            setShowPopup(true);
+            setTimeout(() => {
+                setShowPopup(false);
+            }, 3000); // Hide after 3 seconds
             console.log(error);
         }
     }
@@ -49,7 +64,15 @@ export default function ShowAllItems({ items }) {
                     </div>
                 ))}
             </div>
+
             {showLoginPage && <LoginPage setShowLoginPage={setShowLoginPage}/>}
+
+                {/* show pop up message if item added to cart */}
+            {showPopup && (
+                <div className="fixed top-0 left-1/2 transform -translate-x-1/2 mt-4 px-6 py-3 bg-green-500 text-white rounded-lg shadow-md">
+                    {popupMessage}
+                </div>
+            )}
         </div>
     );
 }
