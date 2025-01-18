@@ -8,6 +8,7 @@ const login = require("./routes/login.js")
 const signup = require("./routes/signup.js")
 const userLoginCheck = require("./routes/userLoginCheck.js")
 const cookieParser = require("cookie-parser");
+const logout = require("./routes/logout.js")
 
 dotenv.config();
 
@@ -30,6 +31,7 @@ app.use('/api', getItems);
 app.use('/api', login);
 app.use('/api', signup);
 app.use('/api', userLoginCheck);
+app.use('/api', logout);
 
 
 const port = process.env.PORT || 3201;
