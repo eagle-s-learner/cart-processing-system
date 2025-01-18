@@ -8,7 +8,8 @@ const login = require("./routes/login.js")
 const signup = require("./routes/signup.js")
 const userLoginCheck = require("./routes/userLoginCheck.js")
 const cookieParser = require("cookie-parser");
-const logout = require("./routes/logout.js")
+const logout = require("./routes/logout.js");
+const addItemToCart = require("./routes/addItem.js");
 
 dotenv.config();
 
@@ -32,7 +33,7 @@ app.use('/api', login);
 app.use('/api', signup);
 app.use('/api', userLoginCheck);
 app.use('/api', logout);
-app.use('/api', );
+app.use('/api', addItemToCart);
 
 
 const port = process.env.PORT || 3201;

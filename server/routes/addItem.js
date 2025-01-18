@@ -1,8 +1,9 @@
 const express = require("express");
-const  getItems  = require("../controllars/getItems");
+const checkAuth = require("../middleware/checkAuth");
+const addItem = require("../controllars/addItem");
 
 const routes = express.Router();
 
-routes.get('/additem/', getItems);
+routes.post("/additem", checkAuth, addItem);
 
 module.exports = routes;
