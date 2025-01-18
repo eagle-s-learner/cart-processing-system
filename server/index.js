@@ -6,6 +6,8 @@ const getItems = require("./routes/getItems.js");
 const cors = require("cors");
 const login = require("./routes/login.js")
 const signup = require("./routes/signup.js")
+const userLoginCheck = require("./routes/userLoginCheck.js")
+const cookieParser = require("cookie-parser");
 
 dotenv.config();
 
@@ -16,6 +18,8 @@ app.use(cors({
     credentials: true,
     origin: "http://localhost:5173"
 }))
+app.use(cookieParser());
+app.use(express.urlencoded({extended: true}))
 
 // app.get('/', async (req, res) => {
 //     const result = await client.query(`SELECT * FROM items`);
@@ -25,6 +29,7 @@ app.use(cors({
 app.use('/api', getItems);
 app.use('/api', login);
 app.use('/api', signup);
+app.use('/api', userLoginCheck);
 
 
 const port = process.env.PORT || 3201;
